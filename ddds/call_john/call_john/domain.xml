@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<domain name="CallJohnDomain" is_super_domain="true">
+
+  <goal type="perform" action="top">
+    <plan>
+      <forget_all/>
+      <findout type="goal"/>
+    </plan>
+  </goal>
+
+  <goal type="perform" action="call">
+    <plan>
+      <findout type="wh_question" predicate="selected_contact"/>
+      <findout type="wh_question" predicate="selected_phone_type"/>
+      <invoke_service_action name="Call" postconfirm="true"/>
+    </plan>
+  </goal>
+
+  <goal type="resolve" question_type="wh_question" predicate="phone_number">
+    <plan>
+      <findout type="wh_question" predicate="selected_contact"/>
+      <findout type="wh_question" predicate="selected_phone_type"/>
+	  <invoke_service_query type="wh_question" predicate="phone_number"/>
+		<forget predicate="selected_phone_type"/>
+    </plan>
+  </goal>
+
+</domain>

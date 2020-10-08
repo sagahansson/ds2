@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grammar>
+
+  <action name="top">
+    <one-of>
+      <item>main menu</item>
+      <item>top</item>
+      <item>beginning</item>
+      <item>cancel</item>
+      <item>forget it</item>
+      <item>never mind</item>
+      <item>abort</item>
+    </one-of>
+  </action>
+
+  <action name="up">
+    <one-of>
+      <item>up</item>
+      <item>back</item>
+      <item>go back</item>
+    </one-of>
+  </action>
+
+  <action name="call">
+    <one-of>
+      <item>call</item>
+      <item>make a call</item>
+      <item>call <slot predicate="selected_contact" type="individual"/></item>
+      <item>call <slot predicate="selected_contact" type="individual"/> <slot predicate="selected_phone_type" type="individual"/></item>
+    </one-of>
+  </action>
+
+<!-- report -->
+
+  <report action="Call" status="ended">Calling <slot predicate="selected_contact"/>'s <slot predicate="selected_phone_type"/></report>
+
+
+<!-- questions -->
+
+<!-- Both the user and the system can use this phrase to ask about a contact's phone number. Example:
+U: What is Mary's phone number?
+When returning to discussing this question after talking about something else, the system can say "Returning to the contact's phone number". -->
+  <question speaker="system" type="goal">What would you like to do?</question>
+
+  <question speaker="user" predicate="phone_number">
+    <one-of>
+      <item>tell me a phone number</item>
+      <item>what is <slot predicate="selected_contact" type="individual"/> number</item>
+      <item>what is <slot predicate="selected_contact" type="individual"/> <slot predicate="selected_phone_type" type="individual"/></item>
+      <item>I want to know a contact's number</item>
+    </one-of>
+  </question>
+
+
+  <question speaker="all" predicate="phone_number" type="wh_question">the contact's phone number</question>
+
+  <question speaker="system" predicate="selected_contact" type="wh_question">Which contact</question>
+  <question speaker="system" predicate="selected_phone_type" type="wh_question">Which phone</question>
+  
+  <question speaker="system" predicate="selected_contact" type="alt_question">Do you want to call or know the contact's phone number?</question>
+
+<!-- answer -->
+  
+  <answer speaker="system" predicate="phone_number">It's<slot predicate="phone_number"/></answer>
+
+
+<!-- individual -->
+  <individual name="contact_john">
+    <one-of>
+      <item>John</item>
+      <item>john</item>
+      <item>John's</item>
+      <item>john's</item>
+    </one-of>
+  </individual>
+
+  <individual name="contact_mary">
+    <one-of>
+      <item>Mary</item>
+      <item>Mary's</item>
+    </one-of>
+  </individual>
+
+  <individual name="mobile">mobile</individual>
+ 
+  <individual name="work">
+    <one-of>
+      <item>work</item>
+      <item>work number</item>
+      <item>work phone</item>
+    </one-of>
+  </individual>
+
+  <individual name="home">home</individual>
+
+</grammar>
